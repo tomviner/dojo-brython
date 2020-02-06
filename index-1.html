@@ -1,0 +1,44 @@
+<html>
+<head>
+<script src="/Users/tom/dev/dojo-brython/venv/lib/python3.8/site-packages/brython/data/brython.js"></script>
+</head>
+<body onload="brython()">
+<script type="text/python">
+from browser import document, alert
+from browser.html import DIV, INPUT
+
+# bind event 'click' on button to function echo
+
+def show_python(event):
+	print(dir(event))
+	print(event.target.id)
+	print(event.data)
+	output = exec(document["code"].value, {'x': 5, 'y': 7})
+	document["output"].textContent = output
+	answer = 12
+	if output == answer:
+		sentence = '✅'
+	else:
+		sentence = '❌'
+	document["results"].textContent = sentence
+
+r = document.select(".row")[0]
+document["qs"].append(r.clone())
+
+# document["code"].bind("input", show_python)
+</script>
+<div class="row">
+	<div>
+		Q: What's the result of adding these two numbers?<br>
+		<pre>
+			x = 5
+			y = 7
+		<pre>
+	</div>
+	<input class="code">
+	<div class="output"></div>
+	<div class="results"></div>
+</div>
+<div id="qs"></div>
+</body>
+</html>
